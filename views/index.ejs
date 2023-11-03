@@ -1,0 +1,72 @@
+<h1>Punch In / Punch Out</h1>
+<div class="punch-form">
+  <form action="/punchout" method="post" id="punchin-form">
+    <div class="input-container">
+      <label for="username">Enter your user-Id:</label>
+      <input type="text" name="username" id="username" />
+    </div>
+    <div class="task-container">
+      <div class="input-container">
+        <label for="task">Task for the day:</label>
+        <input type="text" name="task" />
+      </div>
+      <button class="add-task">+</button>
+    </div>
+    <div class="button-container">
+      <button class="in" type="button" id="punchInButton">Punch In</button>
+      <button class="out" type="submit" id="punchOutButton">Punch Out</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  $(document).ready(function () {
+    $("#punchInButton").on("click", function (e) {
+      e.preventDefault();
+
+      var formData = $("#punchin-form").serialize();
+      console.log("formData in ajax", formData);
+      $.ajax({
+        type: "POST",
+        url: "/punchin",
+        data: formData,
+        contentType: "application/x-www-form-urlencoded",
+        success: function (response) {
+          console.log("REPONSE",response)
+          if (response.status == false) {
+            try {
+              alert("Already Punched");
+            } catch (error) {
+              console.error("Error parsing JSON:", error);
+            } 
+          } else {
+            try {
+              alert("Punch In successful");
+            } catch (error) {
+              console.error("Error parsing JSON:", error);
+            }
+          }
+        },
+      });
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("punchin");
+    const taskContainer = document.querySelector(".task-container");
+    const addTaskButton = document.querySelector(".add-task");
+
+    addTaskButton.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      const newTaskInput = document.createElement("div");
+      newTaskInput.classList.add("input-container");
+      newTaskInput.innerHTML = `
+            <label for="task">Task for the day:</label>
+            <input type="text" name="task" />
+          `;
+
+      taskContainer.insertBefore(newTaskInput, addTaskButton);
+    });
+  });
+</script>

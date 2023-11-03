@@ -1,0 +1,25 @@
+<h1>Punch Activity</h1>
+<table class="activity-table">
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Tasks</th>
+      <th>Punch In Time</th>
+      <th>Punch Out Time</th>
+      <th>Total Worked</th>
+      <th>Completed Tasks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for (let i = 0; i < activities.length; i++) { %>
+      <tr>
+        <td><%= activities[i].username %></td>
+        <td><%= activities[i].tasks.join(',') %></td>
+        <td><%= activities[i].punchInTime %></td>
+        <td><%= activities[i].punchOutTime %></td>
+        <td><%= time[i] %></td>
+        <td><%= activities[i].completed.join(', ') %></td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
